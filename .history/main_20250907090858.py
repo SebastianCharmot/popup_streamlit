@@ -1,0 +1,16 @@
+import streamlit as st
+
+if "player_name_dict" not in st.session_state:
+    st.session_state.player_name_dict = {}
+
+if "player_form_submitted" not in st.sess
+
+print(st.session_state)
+
+with st.form(key="player_names_input"):
+    for i in range(1,9):
+        st.text_input(label=f"Player{i} Name",key=f"name_p{i}")
+        st.session_state.player_name_dict[i] = st.session_state.get(f"name_p{i}","")
+
+    st.form_submit_button(label="Submit")
+
