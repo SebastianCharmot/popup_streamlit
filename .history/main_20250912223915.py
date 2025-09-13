@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 
 if "player_name_dict" not in st.session_state:
     st.session_state.player_name_dict = {}
@@ -388,69 +387,7 @@ def visualize_playoffs():
                 bronze_winner_names = " + ".join(get_player_name(pid) for pid in st.session_state.bronze_medal_winner)
                 st.success(f"Bronze Medal Winner: {bronze_winner_names}")
 
-def visualize_playoffs_graphically():
-    if "playoff_scores" in st.session_state and st.session_state.playoff_scores:
-        st.subheader("Playoff Bracket Visualization")
-
-        # Semifinals
-        semifinal_1 = st.session_state.playoff_scores["semifinal_1"]
-        semifinal_2 = st.session_state.playoff_scores["semifinal_2"]
-        team1_names = " + ".join(get_player_name(pid) for pid in st.session_state.playoff_teams[1])
-        team4_names = " + ".join(get_player_name(pid) for pid in st.session_state.playoff_teams[4])
-        team2_names = " + ".join(get_player_name(pid) for pid in st.session_state.playoff_teams[2])
-        team3_names = " + ".join(get_player_name(pid) for pid in st.session_state.playoff_teams[3])
-
-        # Gold Medal Match
-        gold_team1_names, gold_team2_names, gold_scores = None, None, None
-        if "gold_medal_scores" in st.session_state and st.session_state.gold_medal_scores:
-            gold_scores = st.session_state.gold_medal_scores
-            gold_team1_names = " + ".join(get_player_name(pid) for pid in st.session_state.gold_medal_teams[0])
-            gold_team2_names = " + ".join(get_player_name(pid) for pid in st.session_state.gold_medal_teams[1])
-
-        # Bronze Medal Match
-        bronze_team1_names, bronze_team2_names, bronze_score = None, None, None
-        if "bronze_medal_score" in st.session_state and st.session_state.bronze_medal_score:
-            bronze_team1_names = " + ".join(get_player_name(pid) for pid in st.session_state.bronze_medal_teams[0])
-            bronze_team2_names = " + ".join(get_player_name(pid) for pid in st.session_state.bronze_medal_teams[1])
-            bronze_score = st.session_state.bronze_medal_score
-
-        # Create the figure
-        fig, ax = plt.subplots(figsize=(10, 6))
-        ax.axis("off")
-
-        # Draw the semifinals
-        ax.text(0.1, 0.8, f"{team1_names}\n({semifinal_1[0]})", ha="center", fontsize=10)
-        ax.text(0.1, 0.6, f"{team4_names}\n({semifinal_1[1]})", ha="center", fontsize=10)
-        ax.plot([0.15, 0.3], [0.8, 0.7], color="black")
-        ax.plot([0.15, 0.3], [0.6, 0.7], color="black")
-
-        ax.text(0.1, 0.4, f"{team2_names}\n({semifinal_2[0]})", ha="center", fontsize=10)
-        ax.text(0.1, 0.2, f"{team3_names}\n({semifinal_2[1]})", ha="center", fontsize=10)
-        ax.plot([0.15, 0.3], [0.4, 0.3], color="black")
-        ax.plot([0.15, 0.3], [0.2, 0.3], color="black")
-
-        # Draw the gold medal match
-        if gold_team1_names and gold_team2_names:
-            ax.text(0.4, 0.7, f"{gold_team1_names}", ha="center", fontsize=10)
-            ax.text(0.4, 0.3, f"{gold_team2_names}", ha="center", fontsize=10)
-            ax.plot([0.45, 0.6], [0.7, 0.5], color="black")
-            ax.plot([0.45, 0.6], [0.3, 0.5], color="black")
-
-            if "gold_medal_winner" in st.session_state:
-                winner_names = " + ".join(get_player_name(pid) for pid in st.session_state.gold_medal_winner)
-                ax.text(0.7, 0.5, f"Winner:\n{winner_names}", ha="center", fontsize=12, color="green")
-
-        # Draw the bronze medal match
-        if bronze_team1_names and bronze_team2_names:
-            ax.text(0.4, 0.1, f"{bronze_team1_names}\n({bronze_score['team1']})", ha="center", fontsize=10)
-            ax.text(0.4, -0.1, f"{bronze_team2_names}\n({bronze_score['team2']})", ha="center", fontsize=10)
-            if "bronze_medal_winner" in st.session_state:
-                bronze_winner_names = " + ".join(get_player_name(pid) for pid in st.session_state.bronze_medal_winner)
-                ax.text(0.7, 0.0, f"Winner:\n{bronze_winner_names}", ha="center", fontsize=12, color="brown")
-
-        # Display the plot
-        st.pyplot(fig)
-
+# Generate match forms
 if "player_name_dict" in st.session_state and st.session_state.player_name_dict:
     match_form(round_number=1,team1=[1,5], team2=[7,8], team3=[2,3], team4=[4,6])
     match_form(round_number=2,team1=[4,7], team2=[6,8], team3=[1,2], team4=[3,5])
@@ -468,7 +405,7 @@ if "player_name_dict" in st.session_state and st.session_state.player_name_dict:
     playoffs()
     gold_medal_match()
     bronze_medal_match()
-    visualize_playoffs_graphically()
+    visualize_playoffs()
 
 print("session state end: ", st.session_state)
 
