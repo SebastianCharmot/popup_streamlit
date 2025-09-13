@@ -193,10 +193,10 @@ def playoff_form(team1, team2, team3, team4):
 
             if score3 > score4:
                 st.session_state.gold_medal_teams[1] = team3
-                st.session_state.bronze_medal_teams[1] = team4
+                st.session_state.bronze_medal_teams0] = team4
             else:
-                st.session_state.gold_medal_teams[1] = team4
-                st.session_state.bronze_medal_teams[1] = team3
+                st.session_state.gold_medal_teams[0] = team4
+                st.session_state.bronze_medal_teams[0] = team3
             st.session_state.playoff_scores = {
                 "semifinal_1": (score1, score2),
                 "semifinal_2": (score3, score4)

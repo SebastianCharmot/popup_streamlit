@@ -83,6 +83,29 @@ def match_form(round_number, team1, team2, team3, team4):
                 st.session_state.scores[f"p{pid}_p_for"][round_number - 1] = score4
                 st.session_state.scores[f"p{pid}_diff"][round_number - 1] = score4 - score3
 
+
+            # st.session_state.scores[f"p{id}_wins"] = [0,] * 7
+            # st.session_state.scores[f"p{id}_p_for"] = [0,] * 7
+            # st.session_state.scores[f"p{id}_diff"] = [0,] * 7
+
+            # st.session_state.scores[f"match_{match_id}"] = {
+            #     "round": round_number,
+            #     team1: score1,
+            #     team2: score2,
+            #     team3: score3,
+            #     team4: score4,
+            # }
+            # st.session_state.progress.append(f"Match {match_id} scores updated")
+        # if submitted:
+        #     st.session_state.scores[f"match_{match_id}"] = {
+        #         "round": round_number,
+        #         team1: score1,
+        #         team2: score2,
+        #         team3: score3,
+        #         team4: score4,
+        #     }
+        #     st.session_state.progress.append(f"Match {match_id} scores updated")
+
 def get_standings_df():
 
     data = []
@@ -154,57 +177,12 @@ def draft_playoff_teams():
         player_names = [get_player_name(pid) for pid in players]
         st.write(f"Team {team}: {', '.join(player_names)}")
 
-def playoff_form(team1, team2, team3, team4):
-
-    if "gold_medal_teams" not in st.session_state:
-        st.session_state.gold_medal_teams = [0,0]
-    if "bronze_medal_teams" not in st.session_state:
-        st.session_state.bronze_medal_teams = [0,0]
-    if "playoff_scores" not in st.session_state:
-        st.session_state.playoff_scores = {}
-
-    with st.form(key=f"playoff_form"):
-        st.header(f"Semifinals Playoff") 
-        col1, col2 = st.columns(2)
-
-        with col1:
-            team1_names = " + ".join(get_player_name(pid) for pid in team1)
-            team2_names = " + ".join(get_player_name(pid) for pid in team2)
-            st.write(f"{team1_names} vs. {team2_names}")
-            score1 = st.number_input(label=f"Score for {team1_names}", key=f"score_playoff_1", min_value=0)
-            score2 = st.number_input(label=f"Score for {team2_names}", key=f"score_playoff_2", min_value=0)
-
-        with col2:
-            team3_names = " + ".join(get_player_name(pid) for pid in team3)
-            team4_names = " + ".join(get_player_name(pid) for pid in team4)
-            st.write(f"{team3_names} vs. {team4_names}")
-            score3 = st.number_input(label=f"Score for {team3_names}", key=f"score_playoff_3", min_value=0)
-            score4 = st.number_input(label=f"Score for {team4_names}", key=f"score_playoff_4", min_value=0)
-
-        submitted = st.form_submit_button(label="Submit")
-        if submitted:
-            # update team1 and team2 
-            if score1 > score2:
-                st.session_state.gold_medal_teams[0] = team1
-                st.session_state.bronze_medal_teams[0] = team2
-            else:
-                st.session_state.gold_medal_teams[0] = team2
-                st.session_state.bronze_medal_teams[0] = team1
-
-            if score3 > score4:
-                st.session_state.gold_medal_teams[1] = team3
-                st.session_state.bronze_medal_teams[1] = team4
-            else:
-                st.session_state.gold_medal_teams[1] = team4
-                st.session_state.bronze_medal_teams[1] = team3
-            st.session_state.playoff_scores = {
-                "semifinal_1": (score1, score2),
-                "semifinal_2": (score3, score4)
-            }
-
 def playoffs():
+    st.subheader("Playoffs: Semifinals")
     if "playoff_teams" in st.session_state and all(len(team) == 2 for team in st.session_state.playoff_teams.values()):
-        playoff_form(
+        # Semifinal 1: Team 1 vs Team 4
+        match_form(
+            round_number="Semifinal 1",
             team1=st.session_state.playoff_teams[1],
             team2=st.session_state.playoff_teams[4],
             team3=st.session_state.playoff_teams[2],

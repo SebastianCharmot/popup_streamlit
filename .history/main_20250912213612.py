@@ -157,9 +157,9 @@ def draft_playoff_teams():
 def playoff_form(team1, team2, team3, team4):
 
     if "gold_medal_teams" not in st.session_state:
-        st.session_state.gold_medal_teams = [0,0]
+        st.session_state.gold_medal_teams = []
     if "bronze_medal_teams" not in st.session_state:
-        st.session_state.bronze_medal_teams = [0,0]
+        st.session_state.bronze_medal_teams = []
     if "playoff_scores" not in st.session_state:
         st.session_state.playoff_scores = {}
 
@@ -186,17 +186,17 @@ def playoff_form(team1, team2, team3, team4):
             # update team1 and team2 
             if score1 > score2:
                 st.session_state.gold_medal_teams[0] = team1
-                st.session_state.bronze_medal_teams[0] = team2
+                st.session_state.bronze_medal_teams[0] team2)
             else:
-                st.session_state.gold_medal_teams[0] = team2
-                st.session_state.bronze_medal_teams[0] = team1
+                st.session_state.gold_medal_teams.append(team2)
+                st.session_state.bronze_medal_teams.append(team1)
 
             if score3 > score4:
-                st.session_state.gold_medal_teams[1] = team3
-                st.session_state.bronze_medal_teams[1] = team4
+                st.session_state.gold_medal_teams.append(team3)
+                st.session_state.bronze_medal_teams.append(team4)
             else:
-                st.session_state.gold_medal_teams[1] = team4
-                st.session_state.bronze_medal_teams[1] = team3
+                st.session_state.gold_medal_teams.append(team4)
+                st.session_state.bronze_medal_teams.append(team3)
             st.session_state.playoff_scores = {
                 "semifinal_1": (score1, score2),
                 "semifinal_2": (score3, score4)
