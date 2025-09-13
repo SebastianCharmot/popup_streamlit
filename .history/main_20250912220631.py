@@ -280,10 +280,10 @@ def gold_medal_form(team1, team2):
             else:
                 st.session_state.gold_medal_winner = team2
 
-        # Display the winner
-        if st.session_state.gold_medal_winner:
-            winner_names = " + ".join(get_player_name(pid) for pid in st.session_state.gold_medal_winner)
-            st.success(f"Gold Medal Winner: {winner_names}")
+            # Display the winner
+            if st.session_state.gold_medal_winner:
+                winner_names = " + ".join(get_player_name(pid) for pid in st.session_state.gold_medal_winner)
+                st.success(f"Gold Medal Winner: {winner_names}")
 
 def gold_medal_match():
     if "gold_medal_teams" in st.session_state and st.session_state.gold_medal_teams:
@@ -316,10 +316,10 @@ def bronze_medal_form(team1, team2):
             elif score2 > score1:
                 st.session_state.bronze_medal_winner = team2
 
-        # Display the winner
-        if st.session_state.bronze_medal_winner:
-            winner_names = " + ".join(get_player_name(pid) for pid in st.session_state.bronze_medal_winner)
-            st.success(f"Bronze Medal Winner: {winner_names}")
+            # Display the winner
+            if st.session_state.bronze_medal_winner:
+                winner_names = " + ".join(get_player_name(pid) for pid in st.session_state.bronze_medal_winner)
+                st.success(f"Bronze Medal Winner: {winner_names}")
 
 def bronze_medal_match():
     if "bronze_medal_teams" in st.session_state and st.session_state.bronze_medal_teams:

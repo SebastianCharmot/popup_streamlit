@@ -201,10 +201,6 @@ def playoff_form(team1, team2, team3, team4):
                 "semifinal_1": (score1, score2),
                 "semifinal_2": (score3, score4)
             }
-        if len(st.session_state.gold_medal_teams) == 2 and all(len(team) == 2 for team in st.session_state.gold_medal_teams):
-            team1_names = " + ".join(get_player_name(pid) for pid in st.session_state.gold_medal_teams[0])
-            team2_names = " + ".join(get_player_name(pid) for pid in st.session_state.gold_medal_teams[1])
-            st.success(f"Gold Medal Match: {team1_names} vs. {team2_names}")
 
 def playoffs():
     if "playoff_teams" in st.session_state and all(len(team) == 2 for team in st.session_state.playoff_teams.values()):
@@ -242,7 +238,7 @@ def gold_medal_form(team1, team2):
 
         # Game 3 (if required)
         with col3:
-            st.subheader("Game 3")
+            st.subheader("Game 3 (if required)")
             score1_game3 = st.number_input(label=f"{team1_names}", key="score_gold_1_game3", min_value=0)
             score2_game3 = st.number_input(label=f"{team2_names}", key="score_gold_2_game3", min_value=0)
 
@@ -280,52 +276,11 @@ def gold_medal_form(team1, team2):
             else:
                 st.session_state.gold_medal_winner = team2
 
-        # Display the winner
-        if st.session_state.gold_medal_winner:
-            winner_names = " + ".join(get_player_name(pid) for pid in st.session_state.gold_medal_winner)
-            st.success(f"Gold Medal Winner: {winner_names}")
-
 def gold_medal_match():
     if "gold_medal_teams" in st.session_state and st.session_state.gold_medal_teams:
         team1 = st.session_state.gold_medal_teams[0]
         team2 = st.session_state.gold_medal_teams[1]
         gold_medal_form(team1, team2)
-
-def bronze_medal_form(team1, team2):
-    if "bronze_medal_score" not in st.session_state:
-        st.session_state.bronze_medal_score = {"team1": None, "team2": None}
-    if "bronze_medal_winner" not in st.session_state:
-        st.session_state.bronze_medal_winner = None
-
-    with st.form(key="bronze_medal_form"):
-        st.header("Bronze Medal Match (Game to 15)")
-        team1_names = " + ".join(get_player_name(pid) for pid in team1)
-        team2_names = " + ".join(get_player_name(pid) for pid in team2)
-
-        score1 = st.number_input(label=f"Score for {team1_names}", key="score_bronze_team1", min_value=0, max_value=15)
-        score2 = st.number_input(label=f"Score for {team2_names}", key="score_bronze_team2", min_value=0, max_value=15)
-
-        submitted = st.form_submit_button(label="Submit")
-        if submitted:
-            st.session_state.bronze_medal_score["team1"] = score1
-            st.session_state.bronze_medal_score["team2"] = score2
-
-            # Determine the winner
-            if score1 > score2:
-                st.session_state.bronze_medal_winner = team1
-            elif score2 > score1:
-                st.session_state.bronze_medal_winner = team2
-
-        # Display the winner
-        if st.session_state.bronze_medal_winner:
-            winner_names = " + ".join(get_player_name(pid) for pid in st.session_state.bronze_medal_winner)
-            st.success(f"Bronze Medal Winner: {winner_names}")
-
-def bronze_medal_match():
-    if "bronze_medal_teams" in st.session_state and st.session_state.bronze_medal_teams:
-        team1 = st.session_state.bronze_medal_teams[0]
-        team2 = st.session_state.bronze_medal_teams[1]
-        bronze_medal_form(team1, team2)
 
 # Generate match forms
 if "player_name_dict" in st.session_state and st.session_state.player_name_dict:
@@ -344,7 +299,6 @@ if "player_name_dict" in st.session_state and st.session_state.player_name_dict:
     draft_playoff_teams()
     playoffs()
     gold_medal_match()
-    bronze_medal_match()
 
 # Playoffs 
 
