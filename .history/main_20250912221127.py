@@ -201,7 +201,7 @@ def playoff_form(team1, team2, team3, team4):
                 "semifinal_1": (score1, score2),
                 "semifinal_2": (score3, score4)
             }
-        if "gold_medal_teams" in st.session_state and st.session_state.gold_medal_teams != [0,0]:
+        if "gold_medal_teams"
             if len(st.session_state.gold_medal_teams) == 2 and all(len(team) == 2 for team in st.session_state.gold_medal_teams):
                 team1_names = " + ".join(get_player_name(pid) for pid in st.session_state.gold_medal_teams[0])
                 team2_names = " + ".join(get_player_name(pid) for pid in st.session_state.gold_medal_teams[1])
@@ -287,11 +287,10 @@ def gold_medal_form(team1, team2):
             st.success(f"Gold Medal Winner: {winner_names}")
 
 def gold_medal_match():
-    if "playoff_scores" in st.session_state and st.session_state.playoff_scores:
-        if "gold_medal_teams" in st.session_state and st.session_state.gold_medal_teams:
-            team1 = st.session_state.gold_medal_teams[0]
-            team2 = st.session_state.gold_medal_teams[1]
-            gold_medal_form(team1, team2)
+    if "gold_medal_teams" in st.session_state and st.session_state.gold_medal_teams:
+        team1 = st.session_state.gold_medal_teams[0]
+        team2 = st.session_state.gold_medal_teams[1]
+        gold_medal_form(team1, team2)
 
 def bronze_medal_form(team1, team2):
     if "bronze_medal_score" not in st.session_state:
@@ -324,21 +323,20 @@ def bronze_medal_form(team1, team2):
             st.success(f"Bronze Medal Winner: {winner_names}")
 
 def bronze_medal_match():
-    if "playoff_scores" in st.session_state and st.session_state.playoff_scores:
-        if "bronze_medal_teams" in st.session_state and st.session_state.bronze_medal_teams:
-            team1 = st.session_state.bronze_medal_teams[0]
-            team2 = st.session_state.bronze_medal_teams[1]
-            bronze_medal_form(team1, team2)
+    if "bronze_medal_teams" in st.session_state and st.session_state.bronze_medal_teams:
+        team1 = st.session_state.bronze_medal_teams[0]
+        team2 = st.session_state.bronze_medal_teams[1]
+        bronze_medal_form(team1, team2)
 
 # Generate match forms
 if "player_name_dict" in st.session_state and st.session_state.player_name_dict:
     match_form(round_number=1,team1=[1,5], team2=[7,8], team3=[2,3], team4=[4,6])
     match_form(round_number=2,team1=[4,7], team2=[6,8], team3=[1,2], team4=[3,5])
-    match_form(round_number=3,team1=[3,4], team2=[5,7], team3=[2,6], team4=[1,8])
-    match_form(round_number=4,team1=[1,6], team2=[4,5], team3=[3,7], team4=[2,8])
-    match_form(round_number=5,team1=[5,6], team2=[7,2], team3=[1,4], team4=[3,8])
-    match_form(round_number=6,team1=[4,8], team2=[2,5], team3=[6,7], team4=[1,3])
-    match_form(round_number=7,team1=[1,7], team2=[2,4], team3=[3,6], team4=[5,8])
+    # match_form(round_number=3,team1=[3,4], team2=[5,7], team3=[2,6], team4=[1,8])
+    # match_form(round_number=4,team1=[1,6], team2=[4,5], team3=[3,7], team4=[2,8])
+    # match_form(round_number=5,team1=[5,6], team2=[7,2], team3=[1,4], team4=[3,8])
+    # match_form(round_number=6,team1=[4,8], team2=[2,5], team3=[6,7], team4=[1,3])
+    # match_form(round_number=7,team1=[1,7], team2=[2,4], team3=[3,6], team4=[5,8])
 
     st.subheader("Standings")
     standings_df = get_standings_df()
