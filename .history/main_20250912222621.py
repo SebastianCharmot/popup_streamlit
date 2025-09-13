@@ -59,25 +59,29 @@ def match_form(round_number, team1, team2, team3, team4):
             if score1 > score2:
                 for pid in team1:
                     st.session_state.scores[f"p{pid}_wins"][round_number - 1] = 1
-                st.session_state[f"winner_{round_number}_1"] = team1_names
+                winner1 = team1_names
             elif score2 > score1:
                 for pid in team2:
                     st.session_state.scores[f"p{pid}_wins"][round_number - 1] = 1
-                st.session_state[f"winner_{round_number}_1"] = team2_names
+                winner1 = team2_names
             else:
-                st.session_state[f"winner_{round_number}_1"] = "Draw"
+                winner1 = "Draw"
 
             # Update team3 and team4
             if score3 > score4:
                 for pid in team3:
                     st.session_state.scores[f"p{pid}_wins"][round_number - 1] = 1
-                st.session_state[f"winner_{round_number}_2"] = team3_names
+                winner2 = team3_names
             elif score4 > score3:
                 for pid in team4:
                     st.session_state.scores[f"p{pid}_wins"][round_number - 1] = 1
-                st.session_state[f"winner_{round_number}_2"] = team4_names
+                winner2 = team4_names
             else:
-                st.session_state[f"winner_{round_number}_2"] = "Draw"
+                winner2 = "Draw"
+
+            # Display winners
+            st.success(f"Winner of {team1_names} vs. {team2_names}: {winner1}")
+            st.success(f"Winner of {team3_names} vs. {team4_names}: {winner2}")
 
             for pid in team1:
                 st.session_state.scores[f"p{pid}_p_for"][round_number - 1] = score1
@@ -86,18 +90,13 @@ def match_form(round_number, team1, team2, team3, team4):
                 st.session_state.scores[f"p{pid}_p_for"][round_number - 1] = score2
                 st.session_state.scores[f"p{pid}_diff"][round_number - 1] = score2 - score1
             
+            # update team3 and team4
             for pid in team3:
                 st.session_state.scores[f"p{pid}_p_for"][round_number - 1] = score3
                 st.session_state.scores[f"p{pid}_diff"][round_number - 1] = score3 - score4
             for pid in team4:
                 st.session_state.scores[f"p{pid}_p_for"][round_number - 1] = score4
                 st.session_state.scores[f"p{pid}_diff"][round_number - 1] = score4 - score3
-
-    # Display winners outside the form submission
-    if f"winner_{round_number}_1" in st.session_state:
-        st.success(f"Winner of {team1_names} vs. {team2_names}: {st.session_state[f'winner_{round_number}_1']}")
-    if f"winner_{round_number}_2" in st.session_state:
-        st.success(f"Winner of {team3_names} vs. {team4_names}: {st.session_state[f'winner_{round_number}_2']}")
 
 def get_standings_df():
 
